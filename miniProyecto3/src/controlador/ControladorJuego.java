@@ -64,6 +64,12 @@ public class ControladorJuego {
         ventana.setVisible(true);
     }
 
+    public void personajeSeleccionado(Personaje p) {
+    System.out.println("Seleccionado: " + p.getNombre());
+    
+    //Put Logic About Person
+}
+
     // aqui van todos los metodos que puede usar la vista y pues al rato se va acomodando bien a como lo teniamos antes
     //esto fue solo una prueba para ver si funcionaba o no
     public void atacar(int indiceHeroe, int indiceMonstruo) {
