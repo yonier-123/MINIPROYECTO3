@@ -3,6 +3,9 @@ package controlador;
  del modelo y la vista
  */
 import java.util.ArrayList;
+
+import javax.swing.JProgressBar;
+
 import modelo.*;
 import vista.VentanaBatalla;
 
@@ -13,6 +16,7 @@ public class ControladorJuego {
     private MusicaFondo musica;
     private VentanaBatalla ventana;
     private Batalla batalla;
+    private int heroPosition,monsterPosition;
 
     public ControladorJuego() {
         heroes = new ArrayList<>();
@@ -65,17 +69,53 @@ public class ControladorJuego {
     }
 
     public void personajeSeleccionado(Personaje p) {
-    System.out.println("Seleccionado: " + p.getNombre());
-    
-    //Put Logic About Person
-}
+         System.out.println("Seleccionado: " + p.getNombre());
+         if(heroPosition !=0){
+
+         }else{
+            heroPosition = batalla.getPositionHero(heroes,p.getNombre());
+         }
+               //Estos Condicionales son para que se conserve correctamente el valor de la posicion a escojer
+         if(monsterPosition !=0){
+
+         }else{
+            monsterPosition = batalla.getPositionMonster(monstruos,p.getNombre());
+         }
+       
+
+    }
 
     // aqui van todos los metodos que puede usar la vista y pues al rato se va acomodando bien a como lo teniamos antes
     //esto fue solo una prueba para ver si funcionaba o no
-    public void atacar(int indiceHeroe, int indiceMonstruo) {
-        batalla.EmpezarBatalla(heroes, monstruos, indiceHeroe, indiceMonstruo, "Atacar");
-        ventana.actualizarPantalla();
+    public void atacar() {
+        System.out.println(heroPosition + " - "+ monsterPosition);//Para ver Comportamiento de las posiciones
+        batalla.EmpezarBatalla(heroes, monstruos, heroPosition, monsterPosition, "atacar");
+        ventana.actualizarPantalla(heroes,monstruos);
+        heroPosition=0;//Reinicio de posiciones
+        monsterPosition=0;
     }
+
+    public void defender() {
+        batalla.EmpezarBatalla(heroes, monstruos, heroPosition, monsterPosition, "defender");
+        ventana.actualizarPantalla(heroes,monstruos);
+        heroPosition=0;//Reinicio de posiciones
+        monsterPosition=0;
+    }
+
+    public void habilidad() {
+        batalla.EmpezarBatalla(heroes, monstruos, heroPosition, monsterPosition, "habilidad");
+        ventana.actualizarPantalla(heroes,monstruos);
+        heroPosition=0;//Reinicio de posiciones
+        monsterPosition=0;
+    }
+
+    public void volverJugar() {
+        batalla.ResetDatosBatalla(heroes, monstruos);
+        ventana.actualizarPantalla(heroes,monstruos);
+        heroPosition=0;//Reinicio de posiciones
+        monsterPosition=0;
+    }
+
 
     public void detenerMusica() {
         musica.detenerMusica();

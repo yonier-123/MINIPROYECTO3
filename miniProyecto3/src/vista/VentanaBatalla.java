@@ -20,7 +20,7 @@ public class VentanaBatalla extends JFrame {
     private ControladorJuego controlador;
     private JPanel panelHeroes, panelMonstruos;
 
-    private JTextArea areaTexto;
+    private JTextArea txtRegistro;
     private JButton botonAtk,botonDef,botonSkill,botonVolverJugar;
 
     public VentanaBatalla(ArrayList<Heroe> heroes, ArrayList<Monstruo> monstruos, ControladorJuego controlador) {
@@ -60,16 +60,18 @@ public class VentanaBatalla extends JFrame {
         panelDerecho.setPreferredSize(new Dimension(300, 0));
 
         // Cuadro de texto de mensajes
-        JTextArea txtMensajes = new JTextArea(15, 25);
-        txtMensajes.setEditable(false);
-        txtMensajes.setLineWrap(true);
-        txtMensajes.setWrapStyleWord(true);
-        txtMensajes.setFont(new Font("Serif", Font.PLAIN, 16));
-        txtMensajes.setBackground(new Color(40, 40, 40));
-        txtMensajes.setForeground(Color.WHITE);
-        JScrollPane scrollMensajes = new JScrollPane(txtMensajes);
+         txtRegistro = new JTextArea(15, 25);
+        txtRegistro.setEditable(false);
+        txtRegistro.setLineWrap(true);
+        txtRegistro.setWrapStyleWord(true);
+        txtRegistro.setFont(new Font("Serif", Font.PLAIN, 16));
+        txtRegistro.setBackground(new Color(40, 40, 40));
+        txtRegistro.setForeground(Color.WHITE);
+        JScrollPane scrollMensajes = new JScrollPane(txtRegistro);
         scrollMensajes.setBorder(BorderFactory.createTitledBorder("Mensajes de batalla"));
         panelDerecho.add(scrollMensajes, BorderLayout.CENTER);
+        //Registra Correctamante todo lo que sucede en batalla
+        RegistroBatalla.setTextArea(txtRegistro);//Se añade JTextArea Ala clase para registrar las acciones en el JTextArea
 
         // Botones de acción debajo
         JPanel panelBotones = new JPanel(new GridLayout(4, 1, 10, 10));
@@ -96,7 +98,7 @@ public class VentanaBatalla extends JFrame {
         botonSkill.setFocusPainted(false);
         panelBotones.add(botonSkill);
 
-         botonVolverJugar = new JButton("Salir");
+         botonVolverJugar = new JButton("Volver a Jugar");
         botonVolverJugar.setFont(new Font("SansSerif", Font.BOLD, 16));
         botonVolverJugar.setBackground(new Color(70, 70, 90));
         botonVolverJugar.setForeground(Color.WHITE);
@@ -154,15 +156,18 @@ public class VentanaBatalla extends JFrame {
         barraHP.setValue(Math.min(p.getHP(), 100));
         barraHP.setString("HP: " + p.getHP());
         barraHP.setStringPainted(true);
+        p.setBarraHP(barraHP);//Se guarda esa barra en especifico asociada a un personaje
         // Barra MP
         JProgressBar barraMP = new JProgressBar(0, 100);
         barraMP.setValue(Math.min(p.getMP(), 100));
         barraMP.setString("MP: " + p.getMP());
         barraMP.setStringPainted(true);
+        p.setBarraMP(barraMP);
         // Barra Estado
         JProgressBar barraEstado = new JProgressBar(0, 100);
         barraEstado.setString("Estado: " + p.getEstado());
         barraEstado.setStringPainted(true);
+        p.setBarraEstado(barraEstado);
         //Separacion Pequeña entre Barras
         panelBarras.add(barraHP);
         panelBarras.add(Box.createVerticalStrut(3)); 
@@ -179,6 +184,7 @@ public class VentanaBatalla extends JFrame {
         return panel;
 
      }
+     
 
      private void asignarEventoBotonPersonaje(JButton boton, Personaje p){
 
@@ -207,19 +213,19 @@ public class VentanaBatalla extends JFrame {
 
         switch (accion) {
             case "atacar":
-                
+                    controlador.atacar();
                 break;
             
              case "defender":
-                
+                    controlador.defender();
                 break;
 
              case "habilidad":
-                
+                    controlador.habilidad();
                 break;
 
              case "Volver a Jugar":
-                    System.exit(0);
+                    controlador.volverJugar();
                break;
         
             default:
@@ -229,20 +235,57 @@ public class VentanaBatalla extends JFrame {
     }
 
 
-    public void actualizarPantalla() {
-        StringBuilder info = new StringBuilder();
-        info.append("=== HÉROES ===\n");
-        for (Heroe h : heroes) {
-            info.append(h.getNombre() + " HP: " + h.getHP() + " Estado: " + h.getEstado() + "\n");
+    public void actualizarPantalla(ArrayList<Heroe> listHeroes, ArrayList<Monstruo> listMonstruos) {
+       
+         // Aqui se Actualiza la barra de los heroes
+    for (Heroe h : listHeroes) {
+
+        if (h.getBarraHP() != null) {
+            JProgressBar barraHP = h.getBarraHP();
+            barraHP.setValue(Math.min(h.getHP(), 100));
+            barraHP.setString("HP: " + h.getHP());
         }
 
-        info.append("\n=== MONSTRUOS ===\n");
-        for (Monstruo m : monstruos) {
-            info.append(m.getNombre() + " HP: " + m.getHP() + " Estado: " + m.getEstado() + "\n");
+        if (h.getBarraMP() != null) {
+            JProgressBar barraMP = h.getBarraMP();
+            barraMP.setValue(Math.min(h.getMP(), 100));
+            barraMP.setString("MP: " + h.getMP());
         }
 
-        areaTexto.setText(info.toString());
+        if (h.getBarraEstado() != null) {
+            JProgressBar barraEstado = h.getBarraEstado();
+            barraEstado.setString("Estado: " + h.getEstado());
+        }
     }
+
+    // aqui se Actualiza la barra de los monstruos
+    for (Monstruo m : listMonstruos) {
+
+        if (m.getBarraHP() != null) {
+            JProgressBar barraHP = m.getBarraHP();
+            barraHP.setValue(Math.min(m.getHP(), 100));
+            barraHP.setString("HP: " + m.getHP());
+        }
+
+        if (m.getBarraMP() != null) {
+            JProgressBar barraMP = m.getBarraMP();
+            barraMP.setValue(Math.min(m.getMP(), 100));
+            barraMP.setString("MP: " + m.getMP());
+        }
+
+        if (m.getBarraEstado() != null) {
+            JProgressBar barraEstado = m.getBarraEstado();
+            barraEstado.setString("Estado: " + m.getEstado());
+        }   
+    }
+
+    //  refrescar la interfaz para actualizarse correctamente
+    revalidate();
+    repaint();
+       
+ }
+
+
 }
 
 /*

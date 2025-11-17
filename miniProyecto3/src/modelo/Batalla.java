@@ -3,11 +3,12 @@ package modelo;
 import java.util.ArrayList;
 
 public class Batalla {
-    
+
     private  boolean todosMonstruosDead=true,todosHeroesDead=true,todosPersonajesMurieron=true, endPartida=true;
 
     public boolean EmpezarBatalla(ArrayList <Heroe> listHeroes, ArrayList <Monstruo> listMonstruos,int posicionHero,int posicionMonster,String nombreBoton){//Determinara quienes se enfrentan primero por medio de saber su velocidad
-        //Cuando terminar Partida sea False se acaba la partida 
+       
+      //Cuando terminar Partida sea False se acaba la partida 
               //el heroe tiene velocidad mayor arranca turno primero de lo contrario arranca el monstruo
                 if(listHeroes.get(posicionHero).getVelocidad() > listMonstruos.get(posicionMonster).getVelocidad()){
                   RegistroBatalla.RegistrarTextos(listHeroes.get(posicionHero).getNombre() +" Es mas Rapido que "+  listMonstruos.get(posicionMonster).getNombre());
@@ -134,6 +135,30 @@ public class Batalla {
                 return todosPersonajesMurieron;
     }
 
+    public int getPositionHero(ArrayList <Heroe> listHeroes,String characterNameHero){
+      int position=0;
+
+        for(int i = 0; i < listHeroes.size();i++){
+              if(listHeroes.get(i).getNombre().equals(characterNameHero)){
+                  position=i;//Position obtiene el valor de la posicion exacta del personaje seleccionado
+                  break;//Se rompe Ciclo 
+              }
+        }
+          return position;//Devuelve Posicion Exacta
+    }
+
+    public int getPositionMonster(ArrayList <Monstruo> listMonstruos,String characterNameMonster){
+        int position=0;
+         for(int i = 0; i < listMonstruos.size();i++){
+              if(listMonstruos.get(i).getNombre().equals(characterNameMonster)){
+                position=i;//Position obtiene el valor de la posicion exacta del personaje seleccionado
+                 break;//Se rompe Ciclo
+              }
+        }
+
+       return position;//Devuelve Posicion Exacta
+    }
+
       //Metodo Creado con el objetivo de reiniciar los datos para jugar otras batallas
     public void ResetDatosBatalla(ArrayList <Heroe> listHeroes, ArrayList <Monstruo> listMonstruos){
             //Reestableciendo Valores de Heroes
@@ -154,7 +179,7 @@ public class Batalla {
         listMonstruos.get(0).setMP(8);
         listMonstruos.get(0).setEstado("Vivo");
         listMonstruos.get(1).setHP(120);
-        listMonstruos.get(1).setMP(12);
+        listMonstruos.get(1).setMP(24);
         listMonstruos.get(1).setEstado("Vivo");
         listMonstruos.get(2).setHP(35);
         listMonstruos.get(2).setMP(9);

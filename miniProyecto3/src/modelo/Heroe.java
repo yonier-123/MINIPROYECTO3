@@ -203,5 +203,3 @@ public class Heroe extends Personaje {
     }
 
 }
-            
-
