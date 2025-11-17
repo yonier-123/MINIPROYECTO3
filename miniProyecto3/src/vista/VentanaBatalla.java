@@ -285,43 +285,5 @@ public class VentanaBatalla extends JFrame {
        
  }
 
-
 }
 
-/*
-
-JPanel item = new JPanel(new GridLayout(3, 1));
-            item.setBorder(BorderFactory.createEtchedBorder());
-            item.add(new JLabel("Nombre: " + p.getNombre()));
-
-            JProgressBar barraHP = new JProgressBar(0, 100);
-            barraHP.setValue(Math.min(p.getHP(), 100));
-            barraHP.setString("HP: " + p.getHP());
-            barraHP.setStringPainted(true);
-            item.add(barraHP);
-
-
-JProgressBar barraMP = new JProgressBar(0, 100);
-            barraMP.setValue(Math.min(p.getMP(), 100));
-            barraMP.setString("MP: " + p.getMP());
-            barraMP.setStringPainted(true);
-            item.add(barraMP);
-
-            JProgressBar barraEstado = new JProgressBar(0, 100);
-            barraEstado.setString("Estado: " + p.getEstado());
-            barraEstado.setStringPainted(true);
-            item.add(barraEstado);*/
-
-
-
-
-/*
-        areaTexto = new JTextArea();
-        areaTexto.setEditable(false);
-        RegistroBatalla.setTextArea(areaTexto);
-        add(new JScrollPane(areaTexto), BorderLayout.CENTER);
-
-        botonAtacar = new JButton("Atacar (Héroe 1 vs Monstruo 1)");
-        botonAtacar.addActionListener(e -> controlador.atacar(0, 0));
-        add(botonAtacar, BorderLayout.SOUTH);
- */
