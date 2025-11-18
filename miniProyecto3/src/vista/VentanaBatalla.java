@@ -7,11 +7,11 @@ package vista;
  de clases.
  */
 import controlador.ControladorJuego;
-import modelo.*;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import modelo.*;
 
 public class VentanaBatalla extends JFrame {
 
@@ -116,15 +116,15 @@ public class VentanaBatalla extends JFrame {
     }
 
 
-     private JPanel crearPanelPersonajes(ArrayList<? extends Personaje> lista, String titulo) {
-         JPanel panel = new JPanel(new GridLayout(1, 4, 15, 15));
-         panel.setBorder(BorderFactory.createTitledBorder(titulo));
-         panel.setBackground(new Color(30, 30, 50));
+    private JPanel crearPanelPersonajes(ArrayList<? extends Personaje> lista, String titulo) {
+    JPanel panel = new JPanel(new GridLayout(1, 4, 15, 15));
+    panel.setBorder(BorderFactory.createTitledBorder(titulo));
+    panel.setBackground(new Color(30, 30, 50));
 
-         for (Personaje p : lista) {
-            
-            JPanel panelPersonaje = new JPanel(new BorderLayout());
-        // Fondo según personaje o monstruo
+    for (Personaje p : lista) {
+        
+        JPanel panelPersonaje = new JPanel(new BorderLayout());
+        // fondo segun personaje o monstruo
         if (p.getNombre().equals("SlimeBoy") || p.getNombre().equals("Dragon") ||
             p.getNombre().equals("Esqueleto") || p.getNombre().equals("Hechicero")) {
             panelPersonaje.setBackground(new Color(100, 40, 40));
@@ -132,61 +132,96 @@ public class VentanaBatalla extends JFrame {
             panelPersonaje.setBackground(new Color(40, 60, 100));
         }
 
-        // --- PANEL CENTRAL DONDE VA EL BOTÓN ---
-        JPanel panelBoton = new JPanel(null);  // Layout absoluto
-        panelBoton.setPreferredSize(new Dimension(80, 80));
+        // panel central donde va la imagen en el boton
+        JPanel panelBoton = new JPanel(new GridBagLayout());
+        panelBoton.setPreferredSize(new Dimension(100, 100));
         panelBoton.setOpaque(false);
 
-        JButton boton = new JButton(p.getNombre());
-        boton.setBounds(5, 5, 70, 70); // Tamaño y posición
-        boton.setOpaque(false);
-        boton.setContentAreaFilled(false);
+        // crear el boton que contendra la imagen o el texto
+        JButton boton = new JButton();
+        boton.setPreferredSize(new Dimension(90, 90));
+        
+        // intentar cargar la imagen del personaje
+        try {
+            // normalizar el nombre del archivo, quitar espacios y acentos
+            String nombreArchivo = p.getNombre()
+                .replace(" ", "")
+                .replace("é", "e");
+            
+            ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/" + nombreArchivo + ".png"));
+            Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            boton.setIcon(new ImageIcon(img));
+            boton.setText("");
+            boton.setBackground(Color.WHITE);
+            boton.setOpaque(true);
+        } catch (Exception ex) {
+            // si no encuentra la imagen, muestra el nombre como antes
+            System.out.println("No se encontró imagen para: " + p.getNombre());
+            boton.setText(p.getNombre());
+            boton.setForeground(Color.WHITE);
+            boton.setFont(new Font("SansSerif", Font.BOLD, 12));
+            boton.setOpaque(false);
+            boton.setContentAreaFilled(false);
+        }
+        
         boton.setBorderPainted(true);
-        boton.putClientProperty("personaje", p);//Asignando personaje al boton
-        asignarEventoBotonPersonaje(boton,p);
-        p.setBoton(boton); //Se Asocia Botones Creados a sus personajes para mas adelante poder controlar esos botones
+        boton.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+        boton.setFocusPainted(false);
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boton.setHorizontalAlignment(SwingConstants.CENTER);
+        boton.setVerticalAlignment(SwingConstants.CENTER);
+        boton.putClientProperty("personaje", p);
+        asignarEventoBotonPersonaje(boton, p);
+        p.setBoton(boton);
+        
         panelBoton.add(boton);
 
-        // Nombre de cada Personaje
+        // nombre de cada personaje
         JLabel nombreHeroe = new JLabel(p.getNombre(), SwingConstants.CENTER);
         nombreHeroe.setForeground(Color.WHITE);
-         //Para pner un JProgress encima de otro
+        nombreHeroe.setFont(new Font("SansSerif", Font.BOLD, 12));
+        
+        // panel para las barras
         JPanel panelBarras = new JPanel();
         panelBarras.setLayout(new BoxLayout(panelBarras, BoxLayout.Y_AXIS));
-        panelBarras.setOpaque(false); // fondo transparente para ver color del panel
-        // Barra HP
+        panelBarras.setOpaque(false);
+        
+        // barra hp
         JProgressBar barraHP = new JProgressBar(0, 100);
         barraHP.setValue(Math.min(p.getHP(), 100));
         barraHP.setString("HP: " + p.getHP());
         barraHP.setStringPainted(true);
-        p.setBarraHP(barraHP);//Se guarda esa barra en especifico asociada a un personaje
-        // Barra MP
+        p.setBarraHP(barraHP);
+        
+        // barra mp
         JProgressBar barraMP = new JProgressBar(0, 100);
         barraMP.setValue(Math.min(p.getMP(), 100));
         barraMP.setString("MP: " + p.getMP());
         barraMP.setStringPainted(true);
         p.setBarraMP(barraMP);
-        // Barra Estado
+        
+        // barra estado
         JProgressBar barraEstado = new JProgressBar(0, 100);
         barraEstado.setString("Estado: " + p.getEstado());
         barraEstado.setStringPainted(true);
         p.setBarraEstado(barraEstado);
-        //Separacion Pequeña entre Barras
+        
+        // separacion pequeña entre barras
         panelBarras.add(barraHP);
         panelBarras.add(Box.createVerticalStrut(3)); 
         panelBarras.add(barraMP);
         panelBarras.add(Box.createVerticalStrut(3));
         panelBarras.add(barraEstado);
-        // Se agregan en el panel principal
+        
+        // se agregan en el panel principal
         panelPersonaje.add(nombreHeroe, BorderLayout.NORTH);
-        panelPersonaje.add(panelBoton,BorderLayout.CENTER);
+        panelPersonaje.add(panelBoton, BorderLayout.CENTER);
         panelPersonaje.add(panelBarras, BorderLayout.SOUTH);
         
         panel.add(panelPersonaje);
     }
-        return panel;
-
-     }
+    return panel;
+}
         //Getters y setters para habilitar y deshabilitar botones
      public void setBotonAcciones(boolean b){
         enableAtacar(b);

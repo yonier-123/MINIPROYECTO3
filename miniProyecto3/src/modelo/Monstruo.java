@@ -18,42 +18,50 @@ public class Monstruo extends Personaje {
         habilidades.add(habilidad);
     }
 
-     public void recibirAtaqueEvil(int danoEvil,ArrayList <Heroe> listHeroes,int posicion){
+    public void recibirAtaqueEvil(int danoEvil,ArrayList <Heroe> listHeroes,int posicion){
+   
+    if(listHeroes.get(posicion).getEstado().equals("Defensa")){
+         // no se imprime las salidas del else por la cuestion que se imprimen las salidas del metodo defensa
+    }else{
+       RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + "Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
+       listHeroes.get(posicion).setHP(listHeroes.get(posicion).getHP() - danoEvil);
        
-        if(listHeroes.get(posicion).getEstado().equals("Defensa")){
-             //No se imprime las salidas del else por la cuestion que se imprimen las salidas del metodo defensa
-        }else{
-           RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + "Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
-           listHeroes.get(posicion).setHP(listHeroes.get(posicion).getHP() - danoEvil);//Esta linea le resta vida al personaje correspondiente
-           RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + " Ahora Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP"); 
+       // evitar hp negativo
+       if(listHeroes.get(posicion).getHP() < 0){
+           listHeroes.get(posicion).setHP(0);
+       }
+       
+       RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + " Ahora Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP"); 
 
-           //Si el hero tiene 0 o menos de eso de vida estara muerto
-          if(listHeroes.get(posicion).getHP() == 0 || listHeroes.get(posicion).getHP() < 0){
-             listHeroes.get(posicion).setEstado("Muerto");
-             RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+" Ha Quedado de Baja");
-            }  
-         } 
-           
-         
-        
-    }
+       // si el hero tiene 0 o menos de vida estara muerto
+      if(listHeroes.get(posicion).getHP() <= 0){
+         listHeroes.get(posicion).setEstado("Muerto");
+         RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+" Ha Quedado de Baja");
+        }  
+     }    
+}
 
     public void defensaHero(int defEvil,ArrayList <Heroe> listHeroes,int posicion){
 
-         RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + "Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
-         listHeroes.get(posicion).setHP(listHeroes.get(posicion).getHP() - defEvil);//Esta linea le resta vida al personaje correspondiente
-         RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + " Ahora Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
-         RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+ " Perdio: "+ defEvil + " de HP");
-         RegistroBatalla.RegistrarTextos("Se defendio "+ defEvil+ " De haber sido atakado por: "+ defEvil*2+" de Daño");
-         listHeroes.get(posicion).setEstado("Vivo");//Ya no esta en estado defensa
-         
-         //Si el hero tiene 0 o menos de eso de vida estara muerto
-          if(listHeroes.get(posicion).getHP() == 0 || listHeroes.get(posicion).getHP() < 0){
-             listHeroes.get(posicion).setEstado("Muerto");
-             RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+" Ha Quedado de Baja");
-            }
-
-    }
+     RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + "Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
+     listHeroes.get(posicion).setHP(listHeroes.get(posicion).getHP() - defEvil);
+     
+     // evitar hp negativo
+     if(listHeroes.get(posicion).getHP() < 0){
+         listHeroes.get(posicion).setHP(0);
+     }
+     
+     RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre() + " Ahora Tiene: "+ listHeroes.get(posicion).getHP()+ " de HP");
+     RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+ " Perdio: "+ defEvil + " de HP");
+     RegistroBatalla.RegistrarTextos("Se defendio "+ defEvil+ " De haber sido atakado por: "+ defEvil*2+" de Daño");
+     listHeroes.get(posicion).setEstado("Vivo");
+     
+     // si el hero tiene 0 o menos de vida estara muerto
+      if(listHeroes.get(posicion).getHP() <= 0){
+         listHeroes.get(posicion).setEstado("Muerto");
+         RegistroBatalla.RegistrarTextos(listHeroes.get(posicion).getNombre()+" Ha Quedado de Baja");
+        }
+}
 
 
     @Override
