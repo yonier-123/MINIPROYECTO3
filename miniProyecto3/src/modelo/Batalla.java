@@ -8,6 +8,7 @@ public class Batalla {
 
     public boolean EmpezarBatalla(ArrayList <Heroe> listHeroes, ArrayList <Monstruo> listMonstruos,int posicionHero,int posicionMonster,String nombreBoton){//Determinara quienes se enfrentan primero por medio de saber su velocidad
        
+        
       //Cuando terminar Partida sea False se acaba la partida 
               //el heroe tiene velocidad mayor arranca turno primero de lo contrario arranca el monstruo
                 if(listHeroes.get(posicionHero).getVelocidad() > listMonstruos.get(posicionMonster).getVelocidad()){

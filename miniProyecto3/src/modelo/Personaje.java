@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 public abstract class Personaje {
@@ -16,8 +17,8 @@ public abstract class Personaje {
     private int velocidad;
     private String estado;
     private TipoPersonajes person;
+    private JButton boton;
     JProgressBar barraHP,barraMP,barraEstado;
-    
 
     public Personaje(String nombre, int HP, int MP,int ataque, int defensa, int velocidad,TipoPersonajes person, String estado) {
         this.nombre = nombre;
@@ -101,6 +102,14 @@ public abstract class Personaje {
      public JProgressBar getBarraEstado(){
             return barraEstado;
      }
+
+     public void setBoton(JButton b) {//Añadir Botones asociados a cada Personaje
+         this.boton = b; 
+     }
+     public JButton getBoton() {
+         return boton;
+     }
+
   
     public boolean recibirDanio(int danio,Personaje jugador, Personaje objetivo,boolean defendiendo){ //se le agrega esto para que se tenga en cuenta la variable de vivo y se puedan manejar las batallas mas adelante
        int auxiliarDano= danio;//Guarda daño antiguo para mostrar en la defensa de cuanto daño se defendio

@@ -29,7 +29,7 @@ public class VentanaBatalla extends JFrame {
         this.controlador = controlador;
 
         setTitle("Dragon Quest VIII - Batalla");
-        setSize(1000, 600);
+        setSize(1000, 650);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -71,8 +71,7 @@ public class VentanaBatalla extends JFrame {
         scrollMensajes.setBorder(BorderFactory.createTitledBorder("Mensajes de batalla"));
         panelDerecho.add(scrollMensajes, BorderLayout.CENTER);
         //Registra Correctamante todo lo que sucede en batalla
-        RegistroBatalla.setTextArea(txtRegistro);//Se añade JTextArea Ala clase para registrar las acciones en el JTextArea
-
+        controlador.accionRegistrarTextArea(txtRegistro);
         // Botones de acción debajo
         JPanel panelBotones = new JPanel(new GridLayout(4, 1, 10, 10));
         panelBotones.setBackground(new Color(25, 25, 25));
@@ -105,11 +104,14 @@ public class VentanaBatalla extends JFrame {
         botonVolverJugar.setFocusPainted(false);
         panelBotones.add(botonVolverJugar);
 
+        setBotonAcciones(false);//Para Habilitar o Deshabilitar Botones
+
         panelDerecho.add(panelBotones, BorderLayout.SOUTH);
         add(panelDerecho, BorderLayout.EAST);
         setVisible(true);
 
          configurarEventos();
+         controlador.deactiveMonsterButton();//Los deshabilita inicialmente a los montruos
        // actualizarPantalla();
     }
 
@@ -142,6 +144,7 @@ public class VentanaBatalla extends JFrame {
         boton.setBorderPainted(true);
         boton.putClientProperty("personaje", p);//Asignando personaje al boton
         asignarEventoBotonPersonaje(boton,p);
+        p.setBoton(boton); //Se Asocia Botones Creados a sus personajes para mas adelante poder controlar esos botones
         panelBoton.add(boton);
 
         // Nombre de cada Personaje
@@ -184,9 +187,29 @@ public class VentanaBatalla extends JFrame {
         return panel;
 
      }
-     
+        //Getters y setters para habilitar y deshabilitar botones
+     public void setBotonAcciones(boolean b){
+        enableAtacar(b);
+        enableDefensa(b);
+        enableHabilidad(b);
+        enableVolverJugar(b);
 
-     private void asignarEventoBotonPersonaje(JButton boton, Personaje p){
+     }
+     public void enableAtacar(boolean b){ botonAtk.setEnabled(b); }
+    public void enableDefensa(boolean b){ botonDef.setEnabled(b); }
+    public void enableHabilidad(boolean b){ botonSkill.setEnabled(b); }
+    public void enableVolverJugar(boolean b){ botonVolverJugar.setEnabled(b); }
+
+    public JButton getEnableAtacar(boolean b){ return botonAtk; }
+    public JButton getEnableDefensa(boolean b){ return botonDef; }
+    public JButton getEnableHabilidad(boolean b){ return botonSkill; }
+    public JButton getEnableVolverJugar(boolean b){ return botonVolverJugar; }
+
+  private void asignarEventoBotonPersonaje(JButton boton, Personaje p){
+
+     for (ActionListener remove : boton.getActionListeners()) {
+        boton.removeActionListener(remove);
+    }
 
         //Se Guarda Personaje dentro del evento
     boton.putClientProperty("personaje", p);
@@ -226,8 +249,9 @@ public class VentanaBatalla extends JFrame {
 
              case "Volver a Jugar":
                     controlador.volverJugar();
+                    txtRegistro.setText("");//Para Limpiar por completo el JTextArea
                break;
-        
+
             default:
                 break;
         }
@@ -236,7 +260,7 @@ public class VentanaBatalla extends JFrame {
 
 
     public void actualizarPantalla(ArrayList<Heroe> listHeroes, ArrayList<Monstruo> listMonstruos) {
-       
+
          // Aqui se Actualiza la barra de los heroes
     for (Heroe h : listHeroes) {
 
@@ -277,6 +301,7 @@ public class VentanaBatalla extends JFrame {
             JProgressBar barraEstado = m.getBarraEstado();
             barraEstado.setString("Estado: " + m.getEstado());
         }   
+
     }
 
     //  refrescar la interfaz para actualizarse correctamente
