@@ -7,6 +7,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 import modelo.*;
+import util.MusicaFondo;
 import vista.VentanaBatalla;
 
 public class ControladorJuego {
@@ -29,7 +30,7 @@ public class ControladorJuego {
     }
 
     public void iniciarJuego() {
-        musica.reproducirMusica("src/Megalovania.wav");
+        musica.reproducirMusica("/src/DragonQuest.wav");
         crearPersonajes();
         crearVista();
     }
