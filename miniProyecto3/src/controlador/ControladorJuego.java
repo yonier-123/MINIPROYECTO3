@@ -5,7 +5,6 @@ package controlador;
 import java.util.ArrayList;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-
 import modelo.*;
 import util.MusicaFondo;
 import vista.VentanaBatalla;
@@ -30,7 +29,7 @@ public class ControladorJuego {
     }
 
     public void iniciarJuego() {
-        musica.reproducirMusica("/src/DragonQuest.wav");
+        musica.reproducirMusica("miniProyecto3\\src\\DragonQuest.wav");
         crearPersonajes();
         crearVista();
     }

@@ -17,52 +17,63 @@ public class Heroe extends Personaje {
     }
 
     public int calculoAtaqueHero(int ataque, int defensa,ArrayList <Monstruo> listMonstruos,int posicion){
-        int atk= ataque;
-        int def = defensa;
-        int aleatorio=(int) (Math.random()*2+1) ;
-        //Calculo con la formula daño = (atk-def/2) + random(0-2)
-        danoHero =( (atk - (def/2)) + aleatorio); 
+    int atk= ataque;
+    int def = defensa;
+    int aleatorio=(int) (Math.random()*2+1) ;
+    // calculo con la formula daño = (atk-def/2) + random(0-2)
+    danoHero =( (atk - (def/2)) + aleatorio); 
 
-        if(listMonstruos.get(posicion).getEstado().equals("Defensa")){
-             //No se imprime las salidas del else por la cuestion que se imprimen las salidas del metodo defensa
-        }else{
-         
-          RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + "Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
-          listMonstruos.get(posicion).setHP(listMonstruos.get(posicion).getHP() - danoHero);//Esta linea le resta vida al personaje correspondiente
-           RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + " Ahora Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
-          //Si el hero tiene 0 o menos de eso de vida estara muerto
-          if(listMonstruos.get(posicion).getHP() == 0 || listMonstruos.get(posicion).getHP() < 0){
-             listMonstruos.get(posicion).setEstado("Muerto");
-             RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre()+" Ha Quedado de Baja");
-
-            }
-       
+    if(listMonstruos.get(posicion).getEstado().equals("Defensa")){
+         // no se imprime las salidas del else por la cuestion que se imprimen las salidas del metodo defensa
+    }else{
+     
+      RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + "Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
+      listMonstruos.get(posicion).setHP(listMonstruos.get(posicion).getHP() - danoHero);
+      
+      // evitar hp negativo
+      if(listMonstruos.get(posicion).getHP() < 0){
+          listMonstruos.get(posicion).setHP(0);
+      }
+      
+      RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + " Ahora Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
+      
+      // si el monstruo tiene 0 o menos de vida estara muerto
+      if(listMonstruos.get(posicion).getHP() <= 0){
+         listMonstruos.get(posicion).setEstado("Muerto");
+         RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre()+" Ha Quedado de Baja");
         }
-       
-
-         return danoHero;//Devuelve valor del daño
+   
     }
+   
+     return danoHero;
+}
 
     public int calculoDefensaMonstruo(int danoHero,ArrayList <Monstruo> listMonstruos,int posicion){
-          this.danoHero = danoHero;
-        //Calculo con la formula Defensa = (Daño/2) + random(0-2)
-        defHero =(this.danoHero/2); 
-        //Condicional para indicar que si el numero da negativo para evitar problemas va a valer 0
-        if(defHero <0){
-           defHero=0;
-        }
-         RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + "Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
-         listMonstruos.get(posicion).setHP(listMonstruos.get(posicion).getHP() - defHero);//Esta linea le resta vida al personaje correspondiente
-         RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + " Ahora Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
-         listMonstruos.get(posicion).setEstado("Vivo");//Ya no esta en estado defensa
-         
-         if(listMonstruos.get(posicion).getHP() == 0 || listMonstruos.get(posicion).getHP() < 0){
-             listMonstruos.get(posicion).setEstado("Muerto");
-             RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre()+" Ha Quedado de Baja");
-            }
-
-         return defHero;//Devuelve el valor del daño defendido
+      this.danoHero = danoHero;
+    // calculo con la formula Defensa = (Daño/2) + random(0-2)
+    defHero =(this.danoHero/2); 
+    // condicional para indicar que si el numero da negativo para evitar problemas va a valer 0
+    if(defHero <0){
+       defHero=0;
     }
+     RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + "Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
+     listMonstruos.get(posicion).setHP(listMonstruos.get(posicion).getHP() - defHero);
+     
+     // evitar hp negativo
+     if(listMonstruos.get(posicion).getHP() < 0){
+         listMonstruos.get(posicion).setHP(0);
+     }
+     
+     RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre() + " Ahora Tiene: "+ listMonstruos.get(posicion).getHP()+ " de HP");
+     listMonstruos.get(posicion).setEstado("Vivo");
+     
+     if(listMonstruos.get(posicion).getHP() <= 0){
+         listMonstruos.get(posicion).setEstado("Muerto");
+         RegistroBatalla.RegistrarTextos(listMonstruos.get(posicion).getNombre()+" Ha Quedado de Baja");
+        }
+
+     return defHero;
+}
 
 
 
