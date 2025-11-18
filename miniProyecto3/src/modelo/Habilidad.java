@@ -43,7 +43,7 @@ public class Habilidad {
              case DANIO_MAGICO:
 
                 int danio = dañosMp(jugador, objetivo, random);//El daño es proporcional al tipo de aventurero o enemigo
-                
+                  
                         if (danio <= 0) danio = 0;
                         RegistroBatalla.RegistrarTextos(jugador.getNombre() + " usa " + nombre + " de " + danio + " de daño!" + " contra " + objetivo.getNombre() );
                         if (objetivo.getEstado().equals("Defensa") ){
@@ -89,7 +89,7 @@ public class Habilidad {
      public void gastoMp(Personaje jugador){
 
         switch (jugador.getNombre()) {
-            case "el Heroe":  //Gasta 3MP
+            case "El Héroe":  //Gasta 3MP
                   jugador.setMP(jugador.getMP() - 3);
                 break;
 
@@ -128,7 +128,7 @@ public class Habilidad {
 public int dañosMp(Personaje jugador,Personaje objetivo,int random){
   int danoMp=0; 
         switch (jugador.getNombre()) {
-            case "el Heroe":  
+            case "El Héroe":  
                   danoMp= (int)((jugador.getAtaque() * 1.2) - (objetivo.getDefensa() / 2) + random);
                 break;
 

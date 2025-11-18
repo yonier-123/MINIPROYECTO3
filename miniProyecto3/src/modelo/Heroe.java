@@ -76,11 +76,7 @@ public class Heroe extends Personaje {
             case "atacar":
           
             int enemigo = posicionMonster;
-            if(listMonstruos.get(enemigo).getEstado().equals("Muerto")){
-                         System.out.println("Lo siento pero este monstruo ya esta muerto ");
-                         System.out.println("Vuelve a intentarlo...");
-                         //acciones(listHeroes, listMonstruos, posicion);//Se vuelve a llamar al metodo
-            }else{
+          
                  if(listMonstruos.get(enemigo).getEstado().equals("Defensa")){
                                  danoHero = calculoAtaqueHero(listHeroes.get(posicionHero).getAtaque(),listMonstruos.get(enemigo).getDefensa(),listMonstruos,enemigo); 
                                  defHero = calculoDefensaMonstruo(danoHero,listMonstruos, enemigo);
@@ -91,7 +87,6 @@ public class Heroe extends Personaje {
                                  danoHero = calculoAtaqueHero(listHeroes.get(posicionHero).getAtaque(),listMonstruos.get(enemigo).getDefensa(),listMonstruos,enemigo);
                                  RegistroBatalla.RegistrarTextos(listMonstruos.get(enemigo).getNombre()+ " Perdio: "+ danoHero + " de HP");  
 
-                 }
 
             }
             break;
@@ -122,15 +117,8 @@ public class Heroe extends Personaje {
                      }
                 } else {
 
-                   
                     int objetivo = posicionMonster;
 
-                    if(listMonstruos.get(objetivo).getEstado().equals("Muerto")){
-                         System.out.println("Lo siento pero este monstruo ya esta muerto ");
-                         System.out.println("Vuelve a intentarlo...");
-                         //acciones(listHeroes, listMonstruos, posicion);//Se vuelve a llamar al metodo
-                     }else{
-    
                              if (objetivo >= 0 && objetivo < listMonstruos.size()) {
                                     vivoMonstruo= habilidad.usar(this, listMonstruos.get(objetivo));
                                    
@@ -142,8 +130,6 @@ public class Heroe extends Personaje {
                             }else{
                                 System.out.println("Opción no válida.");
                             }
-
-                      }
                    
                 }
 
@@ -203,5 +189,3 @@ public class Heroe extends Personaje {
     }
 
 }
-            
-
