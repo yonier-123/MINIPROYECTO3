@@ -1,5 +1,7 @@
 # MINIPROYECTO 3 – Sistema de Batalla RPG con Modelo Vista Controlador (MVC)
-Materia: Programación Orientada a EventosAutores:Andrés Felipe Quiceno – 2477362Yonier Alejandro Vega – 2477056Nicolás Cardona – 2477349
+Materia: Programación Orientada a EventosAutores:Andrés Felipe Quiceno – 2477362
+Yonier Alejandro Vega – 2477056
+Nicolás Cardona – 2477349
 
 # Descripción 
 
@@ -23,5 +25,10 @@ En esta tercera entrega se adaptó el mini proyecto 2 a modelo vista controlador
 * Ponerlo en lógica más fiel al dragón Quest vlll que es una lógica por turnos y ordenada por velocidad. Nosotros la tenemos es en 1 vs 1 y el más rápido es que hace su turno primero.
 
 # Ejecución 
-Paso 1 en GitHub Meterse a nuestro repositorio enlace: https://github.com/yonier-123/MINIPROYECTO3.git   copiar y pegarlo en el navegador de preferencia
-Paso 2: darle click izquierdo a code y hay en la parte de abajito darle click a descargar zipPaso 3: darle click derecho al archivo descargado y extraerloPaso 4: abrir Visual Studio Code y darle click a las 3 rayitas horizontales que estan al extremo izquierdo en la parte de arriba luego de eso darle click a filepaso 5: en file darle click open file y buscar la carpeta extraida y darle clickpaso 6: darle click a src y luego darle click a app para hay si ejecutar nuestro sistema de RPG correctamente. Compilar y ejecutar desde App.java.# Files.
+*Paso 1 en GitHub Meterse a nuestro repositorio enlace: https://github.com/yonier-123/MINIPROYECTO3.git   copiar y pegarlo en el navegador de preferencia
+
+*Paso 2: darle click izquierdo a code y hay en la parte de abajito darle click a descargar zip
+*Paso 3: darle click derecho al archivo descargado y extraerlo
+*Paso 4: abrir Visual Studio Code y darle click a las 3 rayitas horizontales que estan al extremo izquierdo en la parte de arriba luego de eso darle click a file
+*paso 5: en file darle click open file y buscar la carpeta extraida y darle click
+*paso 6: darle click a src y luego darle click a app para hay si ejecutar nuestro sistema de RPG correctamente. Compilar y ejecutar desde App.java.# Files.
